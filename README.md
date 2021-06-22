@@ -25,4 +25,4 @@ NOTE! The Keyword is case sensitive. And remember tu use double backslashes in t
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE "LICENSE")
+This project is licensed under the GNU GPLv3 License. See [LICENSE](LICENSE "LICENSE")
