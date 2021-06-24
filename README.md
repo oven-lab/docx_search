@@ -2,15 +2,19 @@
 
 A python library built to search for keywords in .docx files.
 
-## Disclaimer
-
-The code works (On windows at least). But it isn't pretty. (actually really messy...) If you wan't to clean it up, Feel free to do so.
-
 ## Installation
 
-There isn't a release to pypi yet, and i am still making changes to the code.
+### Easy:
 
-To use the library, move the "docx_search" folder into your project.
+`pip install docx_search`
+
+### Advanced:
+
+Requires git.
+
+`Git clone https://github.com/WaldemarBjornstrom/docx_search`
+
+Then place the downloaded files in your project.
 
 ## Usage
 
