@@ -131,3 +131,7 @@ dmypy.json
 
 # Development files
 try.py
+
+# temp files
+unzip/
+index.txt

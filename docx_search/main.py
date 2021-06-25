@@ -3,8 +3,7 @@ import os
 import shutil as sh
 import zipfile
 
-org = []
-end = []
+org, end, response, indexv = [], [], [], []
 
 def run(keyword, s_path):
     if os.path.exists('index.txt'):
@@ -18,7 +17,7 @@ def run(keyword, s_path):
                 with open('index.txt', 'a') as f:
                     f.write(root + '\\' + a)
                     f.write('\n')
-    response = []
+
     searchfile = open("index.txt", "r")
     a_list = []
     for line in searchfile:
@@ -33,8 +32,6 @@ def run(keyword, s_path):
 
     nil = len(a_list)
     counter = 0
-    indexv = []
-    foundin = []
     while counter < nil:
         org.append(a_list[counter])
         end.append('unzip\\' + str(counter))
@@ -73,12 +70,8 @@ def run(keyword, s_path):
     
     try:
         sh.rmtree('unzip')
-    except:
-        pass
-    
-    try:
         os.remove('index.txt')
     except:
         pass
-
+    
     return response
