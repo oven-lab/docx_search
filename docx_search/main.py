@@ -24,15 +24,13 @@ def run(keyword, s_path):
         if '.' + 'docx' in line: 
             a_list.append(line)
     searchfile.close()
-    nil = len(a_list)
     counter = 0
-    while counter < nil:
+    while counter < len(a_list):
         a_list[counter] = a_list[counter][:-1]
         counter += 1
 
-    nil = len(a_list)
     counter = 0
-    while counter < nil:
+    while counter < len(a_list):
         org.append(a_list[counter])
         end.append('unzip\\' + str(counter))
         if os.path.isdir('unzip') == False:
@@ -44,9 +42,8 @@ def run(keyword, s_path):
         indexv.append('unzip\\' + str(counter) +  '\\document.xml')
         counter += 1
 
-    nili = len(indexv)
     counter = 0
-    while counter < nili:
+    while counter < len(indexv):
         searchfile = open(indexv[counter], "r")
         a_list = []
         for line in searchfile:
