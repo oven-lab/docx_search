@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='docx_search',
     packages=find_packages(include=['docx_search']),
-    version='1.0.0',
+    version='1.0.1',
     description='A python library built to search for keywords in .docx files.',
     long_description=long_description,
     long_description_content_type='text/markdown',

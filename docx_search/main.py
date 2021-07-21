@@ -2,8 +2,21 @@
 import os
 import shutil as sh
 import zipfile
+import re
 
 org, end, response, indexv = [], [], [], []
+
+def findtag(line, tag):
+    reso = ""
+    reg_str = "<" + tag + ">(.*?)</" + tag + ">"
+    res_str = '<w:t xml:space="preserve">(.*?)</w:t>'
+    res = re.findall(reg_str, line)
+    reg = re.findall(res_str, line)
+    for i in res:
+        reso += i
+    for i in reg:
+        reso += i
+    return reso
 
 def run(keyword, s_path):
     if os.path.exists('index.txt'):
@@ -47,7 +60,8 @@ def run(keyword, s_path):
         searchfile = open(indexv[counter], "r")
         a_list = []
         for line in searchfile:
-            if keyword in line: 
+            var = findtag(line, 'w:t')
+            if keyword in var: 
                 a_list.append(indexv[counter])
                 found = indexv[counter]
         searchfile.close()
