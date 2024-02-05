@@ -18,7 +18,7 @@ def findtag(line, tag):
         reso += i
     return reso
 
-def run(keyword, s_path):
+def run(keyword, s_path, encoding=None):
     if os.path.exists('index.txt'):
         os.remove('index.txt')
     numberoffiles = 0
@@ -27,11 +27,11 @@ def run(keyword, s_path):
         roots = root
         for a in files:
             if '~$' not in root + '\\' + a:      
-                with open('index.txt', 'a') as f:
+                with open('index.txt', 'a', encoding=encoding) as f:
                     f.write(root + '\\' + a)
                     f.write('\n')
 
-    searchfile = open("index.txt", "r")
+    searchfile = open("index.txt", "r", encoding=encoding)
     a_list = []
     for line in searchfile:
         if '.' + 'docx' in line: 
@@ -57,7 +57,7 @@ def run(keyword, s_path):
 
     counter = 0
     while counter < len(indexv):
-        searchfile = open(indexv[counter], "r")
+        searchfile = open(indexv[counter], "r", encoding=encoding)
         a_list = []
         for line in searchfile:
             var = findtag(line, 'w:t')
