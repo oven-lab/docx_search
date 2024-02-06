@@ -3,6 +3,13 @@ import os
 import shutil as sh
 import zipfile
 import re
+from pathlib import Path
+
+#include progress bar
+from ipywidgets import IntProgress
+from IPython.display import display
+import time
+
 
 org, end, response, indexv = [], [], [], []
 
@@ -28,8 +35,12 @@ def run(keyword, s_path, encoding=None):
         for a in files:
             if '~$' not in root + '\\' + a:      
                 with open('index.txt', 'a', encoding=encoding) as f:
-                    f.write(root + '\\' + a)
-                    f.write('\n')
+                    extension = Path(a).suffix
+                    
+                    #only consider the .doc and .docx files
+                    if ((extension == '.doc') or (extension == '.docx')):
+                        f.write(root + '\\' + a)
+                        f.write('\n')
 
     searchfile = open("index.txt", "r", encoding=encoding)
     a_list = []
@@ -42,6 +53,10 @@ def run(keyword, s_path, encoding=None):
         a_list[counter] = a_list[counter][:-1]
         counter += 1
 
+    
+    f = IntProgress(min=0, max=len(a_list), description="loading files:") # instantiate the progress bar
+    display(f) # display the progress bar
+    
     counter = 0
     while counter < len(a_list):
         org.append(a_list[counter])
@@ -49,11 +64,23 @@ def run(keyword, s_path, encoding=None):
         if os.path.isdir('unzip') == False:
             os.mkdir('unzip')
         sh.copyfile(a_list[counter], end[counter] + '.zip')
-        with zipfile.ZipFile(end[counter] + '.zip') as zip_ref:
-            zip_ref.extractall('unzip\\' + str(counter))
-        sh.copyfile('unzip\\' + str(counter) + '\\word\\document.xml', 'unzip\\' + str(counter) + '\\document.xml')
-        indexv.append('unzip\\' + str(counter) +  '\\document.xml')
+
+        try:   #in case there are some doc/docx that cannot be opened as zip
+            with zipfile.ZipFile(end[counter] + '.zip') as zip_ref:
+                zip_ref.extractall('unzip\\' + str(counter))
+            sh.copyfile('unzip\\' + str(counter) + '\\word\\document.xml', 'unzip\\' + str(counter) + '\\document.xml')
+            indexv.append('unzip\\' + str(counter) +  '\\document.xml')
+        except Exception as e:
+            if e == "File is not a zip file":
+                continue
+        
         counter += 1
+        f.value = counter   #update progress bar
+
+    
+
+    f = IntProgress(min=0, max=len(indexv), description="scanning files:") # instantiate the progress bar
+    display(f) # display the progress bar
 
     counter = 0
     while counter < len(indexv):
@@ -71,13 +98,16 @@ def run(keyword, s_path, encoding=None):
                 if end[counterr] + '\\document.xml' == found:
                    found = str(org[counterr])
                 counterr += 1
+
             respons = str(found)
         else:
             respons = 'None'
 
         if respons != 'None':
-            response.append(respons)
-        counter += 1
+            response.append(respons)       
+            
+        counter += 1     
+        f.value = counter   #update progress bar
     
     try:
         sh.rmtree('unzip')
