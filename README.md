@@ -22,6 +22,7 @@ Then place the downloaded files in your project.
 import docx_search
 
 docx_search.run('Keyword', 'Path\\to\\file') # Returns a list with files that contain the keyword.
+docx_search.run('Keyword', 'Path\\to\\file', encoding='utf-8') # Returns a list with files that contain the keyword, with encoding = 'utf-8'
 
 ```
 
